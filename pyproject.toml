@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cad-agent-tools"
-version = "0.5.0"
+version = "0.5.1"
 description = "Install-and-run local stdio MCP tools for practical CAD file inspection"
 readme = "README.md"
 requires-python = ">=3.10"

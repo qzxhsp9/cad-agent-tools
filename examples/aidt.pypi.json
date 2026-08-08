@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "cad-agent-tools": {
-      "command": "uvx",
-      "args": ["cad-agent-tools@0.5.0"]
+      "command": "cad-agent-tools",
+      "args": []
     }
   }
 }

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import json
 import os
-import tempfile
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -12,6 +12,7 @@ ENV_ALLOWED_ROOTS = "CAD_AGENT_ALLOWED_ROOTS"
 ENV_JOB_ROOT = "CAD_AGENT_JOB_ROOT"
 ENV_MAX_FILE_MB = "CAD_AGENT_MAX_FILE_MB"
 ENV_LOG_LEVEL = "CAD_AGENT_LOG_LEVEL"
+ENV_LOG_FILE = "CAD_AGENT_LOG_FILE"
 
 
 def _default_user_cache_root() -> Path:
@@ -74,6 +75,16 @@ class Settings:
     log_level: str
     allowed_roots_source: str
     job_root_source: str
+    log_file: Path | None = None
+    log_file_source: str = "automatic:platform-user-cache"
+
+    def __post_init__(self) -> None:
+        if self.log_file is None:
+            object.__setattr__(
+                self,
+                "log_file",
+                (_default_user_cache_root() / "logs" / "startup.jsonl").resolve(strict=False),
+            )
 
     @classmethod
     def load(cls) -> "Settings":
@@ -87,13 +98,22 @@ class Settings:
             roots = _deduplicate_paths([Path.cwd(), Path(tempfile.gettempdir())])
             roots_source = "automatic:cwd+temp"
 
+        cache_root = _default_user_cache_root()
         configured_job_root = os.environ.get(ENV_JOB_ROOT, "").strip()
         if configured_job_root:
             job_root = Path(configured_job_root).expanduser().resolve(strict=False)
             job_source = ENV_JOB_ROOT
         else:
-            job_root = (_default_user_cache_root() / "jobs").resolve(strict=False)
+            job_root = (cache_root / "jobs").resolve(strict=False)
             job_source = "automatic:platform-user-cache"
+
+        configured_log_file = os.environ.get(ENV_LOG_FILE, "").strip()
+        if configured_log_file:
+            log_file = Path(configured_log_file).expanduser().resolve(strict=False)
+            log_file_source = ENV_LOG_FILE
+        else:
+            log_file = (cache_root / "logs" / "startup.jsonl").resolve(strict=False)
+            log_file_source = "automatic:platform-user-cache"
 
         raw_max_mb = os.environ.get(ENV_MAX_FILE_MB, "2048")
         try:
@@ -111,4 +131,6 @@ class Settings:
             log_level=log_level,
             allowed_roots_source=roots_source,
             job_root_source=job_source,
+            log_file=log_file,
+            log_file_source=log_file_source,
         )
