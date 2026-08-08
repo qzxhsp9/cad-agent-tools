@@ -1,0 +1,2 @@
+f0befa0640b48c56091d2f6dc7f6a8c2bdae975d20f949d64d0720cf1db82447  dist/cad_agent_tools-0.5.0-py3-none-any.whl
+986f9a3d2aec12c7cf37d6dda066bd774b5e405d9231e8f366a428942c6ac7ec  dist/cad_agent_tools-0.5.0.tar.gz

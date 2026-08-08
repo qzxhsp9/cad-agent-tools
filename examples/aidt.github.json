@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "cad-agent-tools": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/qzxhsp9/cad-agent-tools.git@main",
+        "cad-agent-tools"
+      ]
+    }
+  }
+}

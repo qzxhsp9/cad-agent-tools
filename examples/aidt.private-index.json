@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "cad-agent-tools": {
+      "command": "uvx",
+      "args": ["cad-agent-tools@0.5.0"],
+      "env": {
+        "UV_INDEX_URL": "https://python-packages.example.com/simple"
+      }
+    }
+  }
+}

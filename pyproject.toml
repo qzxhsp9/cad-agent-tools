@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cad-agent-tools"
+version = "0.5.0"
+description = "Install-and-run local stdio MCP tools for practical CAD file inspection"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "CAD Agent Tools Contributors" }
+]
+keywords = ["mcp", "cad", "step", "brep", "iges", "stl", "occt", "aidt"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Manufacturing",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+  "mcp>=2.0,<3.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3,<9.0",
+  "ruff>=0.9,<1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/qzxhsp9/cad-agent-tools"
+Repository = "https://github.com/qzxhsp9/cad-agent-tools"
+Issues = "https://github.com/qzxhsp9/cad-agent-tools/issues"
+
+[project.scripts]
+cad-agent-tools = "cad_agent_tools.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
